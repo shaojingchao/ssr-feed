@@ -12,7 +12,11 @@ function aesDecrypt (t, e) {
   return crypt.enc.Utf8.stringify(n).toString()
 }
 
-module.exports = function decode (req, res, next) {
+let cacheResult = ''
+module.exports = function decode (req, res) {
+  if (cacheResult) {
+    res.send(cacheResult)
+  }
   return axios.get('https://lncn.org/api/ssr-list').then(resData => {
     const data = resData.data
     let list = []
@@ -20,14 +24,21 @@ module.exports = function decode (req, res, next) {
     try {
       list = JSON.parse(aesDecrypt(data.ssrs, base64.decode(data.code)))
     } catch (err) {
-      return next(err)
+      console.log(err)
+      // return next(err)
     }
     list.forEach((item) => {
         result += item.url + '\n'
       }
     )
-    res.send(base64.encode(result))
+    
+    let resResult = base64.encode(result)
+    if (!cacheResult) {
+      res.send(resResult)
+    }
+    console.log('缓存已更新：', resResult)
+    cacheResult = resResult
   }).catch(err => {
-    next(err)
+    console.log(err)
   })
 }
