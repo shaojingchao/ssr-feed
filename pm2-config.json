@@ -1,0 +1,21 @@
+{
+  "apps": [
+    {
+      "name": "ssr-feed",
+      "script": "./server/index.js",
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "env_dev": {
+        "NODE_ENV": "development"
+      },
+      "min_uptime": "10s",
+      "restart_delay": 3000,
+      "max_restarts": 10,
+      "max_memory_restart": "100M",
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "error_file": "./pm2-err.log",
+      "out_file": "./pm2-out.log"
+    }
+  ]
+}
