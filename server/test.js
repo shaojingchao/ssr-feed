@@ -1,14 +1,26 @@
-const axios = require('axios')
-// fetch.get('https://lncn.org/api/ssr-list').then(res => {
-//   console.log(res)
-// }).catch(err => {
-//   console.log(err)
-// })
-const ssr1 = 'https://lncn.org/api/ssr-list'
-const ssr2 = 'https://baidu.com'
-const ssr3 = 'https://lncn.org'
-axios.get(ssr1).then(res => {
+const fetch = require('node-fetch')
+
+fetch("https://lncn.org/", {
+  "headers": {
+    "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
+    "cache-control": "no-cache",
+    "pragma": "no-cache",
+    "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"98\", \"Google Chrome\";v=\"98\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"macOS\"",
+    "sec-fetch-dest": "document",
+    "sec-fetch-mode": "navigate",
+    "sec-fetch-site": "same-origin",
+    "sec-fetch-user": "?1",
+    "upgrade-insecure-requests": "1",
+    "cookie": "__cf_bm=lSoS1LwIz3Z_idgK0f.GT_1Ie7O1_z9klIDZPY3C_vU-1646228637-0-AWs+iOcxCAfYaCh3yHFCUk4HsbEbxdPwzq3JBs3D9mtWSJVmUF4ccG93EQx81xCKEfQgEGjYcH4MT8aSGYU7zCmpRzoMgsFdsGjGerAhuZ9u9CL80dq8SM2RNsaAJiXBCg=="
+  },
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "body": null,
+  "method": "GET"
+}).then(res => {
+  return res.text()
+}).then(res => {
   console.log(res)
-}).catch(err => {
-  console.log(err)
-})
+});

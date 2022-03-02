@@ -4,6 +4,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const decodeSSR = require('./decode-ssr')
+const decodeSSRV2 = require('./decode-ssr-v2')
 const app = express()
 const {clientErrorHandler, errorHandler} = require('./error-handler')
 
@@ -17,7 +18,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-app.get('/ssr-feed', decodeSSR)
+app.get('/v1/ssr-feed', decodeSSR)
+app.get('/v2/ssr-feed', decodeSSRV2)
 
 app.use('*', (req, res) => res.status(404).json({
   code: 1,
