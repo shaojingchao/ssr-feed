@@ -5,6 +5,6 @@ packageFile="/www/package.json"
 if [[ ! -f "$packageFile" ]]; then
  echo "package.json not found"
 else
-npm run start
+sudo npm run start
 fi
-node
+sudo node
