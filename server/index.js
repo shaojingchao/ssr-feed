@@ -1,6 +1,7 @@
-// const fs = require('fs')
-// const path = require('path')
-// const cron = require('node-cron')
+const fs = require('fs')
+const path = require('path')
+const axios = require('axios')
+const cron = require('node-cron')
 const express = require('express')
 const bodyParser = require('body-parser')
 const decodeSSR = require('./decode-ssr')
@@ -18,7 +19,10 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-app.get('/v1/ssr-feed', decodeSSR)
+app.get('/pm2', (req, res, next) => {
+  // res.send(fs.readFileSync('./pm2.html'))
+  res.sendFile(path.join(__dirname, './pm2.html'))
+})
 app.get('/v2/ssr-feed', decodeSSRV2)
 
 app.use('*', (req, res) => res.status(404).json({
@@ -34,10 +38,10 @@ app.listen(port, () => {
    * 服务启动成功后，执行任务计划，每天 03:00 执行 process.exit(1)
    * 触发 pm2 重启程序
    */
-  // const crontask = '0 19 * * *'
-  // cron.schedule(crontask, () => {
-  //   console.log(`cron task ${crontask}`)
-  //   process.exit(1)
-  // })
+  let crontask = `${Math.ceil(Math.random() * 60)} */6 * * *`
+  cron.schedule(crontask, () => {
+    console.log(crontask)
+    axios.get('http://localhost:3000/v2/ssr-feed').then(res => {})
+  })
   console.log(`listening at ${port}!`)
 })
