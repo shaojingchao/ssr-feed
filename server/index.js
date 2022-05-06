@@ -19,10 +19,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-app.get('/pm2', (req, res, next) => {
-  // res.send(fs.readFileSync('./pm2.html'))
-  res.sendFile(path.join(__dirname, './pm2.html'))
-})
+app.use('/public', express.static('public'))
+
 app.get('/v2/ssr-feed', decodeSSRV2)
 
 app.use('*', (req, res) => res.status(404).json({
